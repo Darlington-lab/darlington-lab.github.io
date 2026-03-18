@@ -1,320 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Publications | Darlington Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f5f5f5;
-      --card: #ffffff;
-      --text: #222;
-      --muted: #555;
-      --line: #e5e5e5;
-      --navbg: #f5f5f5;
-      --navline: #ddd;
-      --link: #0073e6;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'DM Sans',sans-serif;font-weight:400;line-height:1.72;color:#1c2b4a;
+      background:
+        radial-gradient(ellipse 45% 30% at 8% 0%,rgba(186,219,255,0.25) 0%,transparent 55%),
+        radial-gradient(ellipse 38% 28% at 92% 6%,rgba(200,225,255,0.16) 0%,transparent 50%),
+        linear-gradient(168deg,#f0f5fb 0%,#f7f9ff 50%,#f1f6f2 100%);
+      min-height:100vh;
     }
-
-    * {
-      box-sizing: border-box;
+    .g{
+      position:relative;background:rgba(255,255,255,0.82);
+      backdrop-filter:blur(20px) brightness(1.02) saturate(1.06);
+      -webkit-backdrop-filter:blur(20px) brightness(1.02) saturate(1.06);
+      border-top:1px solid rgba(255,255,255,0.92);
+      border-left:1px solid rgba(255,255,255,0.72);
+      border-right:1px solid rgba(170,210,245,0.26);
+      border-bottom:1px solid rgba(158,200,238,0.20);
+      box-shadow:0 1px 0 rgba(255,255,255,0.88) inset,-1px 0 0 rgba(255,255,255,0.50) inset,
+        0 8px 32px rgba(90,140,210,0.08),0 2px 8px rgba(90,140,210,0.06);
+      overflow:hidden;
     }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
+    .g::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+      background:rgba(255,255,255,0.96);pointer-events:none;z-index:9;}
+    .g::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(128deg,transparent 24%,rgba(255,255,255,0.18) 31%,rgba(255,255,255,0.22) 36%,rgba(255,255,255,0.10) 42%,transparent 53%);
+      pointer-events:none;z-index:2;}
+    .g-edge{position:absolute;bottom:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,rgba(152,200,240,0.28) 25%,rgba(172,215,250,0.40) 50%,rgba(152,200,240,0.28) 75%,transparent);
+      pointer-events:none;}
+    .g>*{position:relative;z-index:3;}
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(245,250,255,0.88);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(170,210,245,0.22);
     }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+    .nav-inner{
+      max-width:1100px;margin:0 auto;padding:0 28px;
+      display:flex;align-items:center;justify-content:space-between;height:54px;
     }
-
-    nav {
-      background: var(--navbg);
-      border-bottom: 1px solid var(--navline);
-    }
-
-    nav .container {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      padding: 14px 20px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--text);
-      padding: 6px 0;
-    }
-
-    nav a.active {
-      font-weight: 700;
-    }
-
-    main {
-      padding: 36px 0 70px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 22px;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-    }
-
-    h2 {
-      margin: 28px 0 12px;
-    }
-
-    h3 {
-      margin: 18px 0 8px;
-    }
-
-    p {
-      margin: 10px 0;
-    }
-
-    ul {
-      margin: 10px 0 0 22px;
-    }
-
-    a {
-      color: var(--link);
-    }
-
-    a:hover {
-      opacity: 0.9;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid var(--line);
-      margin: 28px 0;
-    }
-
-    /* News list */
-    .news-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .news-list li {
-      display: flex;
-      gap: 18px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .news-date {
-      font-weight: 700;
-      min-width: 90px;
-      color: #444;
-    }
-
-    .news-text {
-      color: #333;
-    }
-
-    /* Members grid cards */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 22px;
-    }
-
-    .member-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px;
-      text-align: center;
-    }
-
-    .member-card img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      margin: 0 auto 12px;
-    }
-
-    .member-card h3 {
-      margin: 10px 0 6px;
-    }
-
-    .member-card p {
-      margin: 6px 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* Location layout */
-    .location-wrap {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .map-box {
-      flex: 1 1 640px;
-      min-width: 320px;
-    }
-
-    .map-box iframe {
-      width: 100%;
-      height: 360px;
-      border: 0;
-      display: block;
-      border-radius: 12px;
-    }
-
-    .addr-box {
-      flex: 0 1 320px;
-      min-width: 240px;
-    }
-  </style>
-
+    .nav-logo{font-family:'Lora',serif;font-size:17px;font-weight:500;
+      color:#111e3a;text-decoration:none;letter-spacing:-0.2px;}
+    .nav-links{display:flex;gap:4px;}
+    .nav-links a{text-decoration:none;font-size:13.5px;font-weight:400;color:#6b7c9a;
+      padding:6px 13px;border-radius:8px;transition:color .18s,background .18s;}
+    .nav-links a:hover{color:#1c2b4a;background:rgba(255,255,255,0.60);}
+    .nav-links a.active{font-weight:500;color:#1c2b4a;}
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 28px 64px;}
+    .card{border-radius:20px;padding:40px 44px 44px;}
+    .sec-label{font-size:10.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+      color:#9ab0cc;margin-bottom:14px;}
+    hr{border:none;border-top:1px solid rgba(170,210,245,0.28);margin:32px 0;}
+    h1{font-family:'Lora',serif;font-size:44px;font-weight:500;letter-spacing:-0.3px;
+      color:#111e3a;margin:0 0 10px;line-height:1.1;}
+    h2{font-family:'Lora',serif;font-size:22px;font-weight:500;color:#111e3a;margin:0 0 14px;line-height:1.2;}
+    h3{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#2a3a58;margin:0 0 8px;}
+    p{font-size:16px;margin:7px 0;color:#374f72;}
+    strong{font-weight:500;color:#1c2b4a;}
+    a{color:#2b5ec7;text-decoration:none;transition:color .18s;}
+    a:hover{color:#1a3fa0;}
+    ul{margin:10px 0 0 22px;font-size:16px;color:#374f72;}
+    li{margin-bottom:7px;}
+    .news-list{list-style:none;padding:0;margin:0;}
+    .news-list li{display:flex;gap:22px;padding:13px 0;border-bottom:1px solid rgba(170,210,245,0.22);}
+    .news-list li:last-child{border-bottom:none;}
+    .news-date{font-size:13px;font-weight:400;min-width:74px;color:#7a9acc;padding-top:2px;}
+    .news-text{font-size:15px;color:#2e3f5c;}
+    .news-text em{font-style:italic;color:#1c2b4a;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;}
+    .member-card{border-radius:14px;padding:24px 18px;text-align:center;
+      background:rgba(255,255,255,0.55);
+      border-top:1px solid rgba(255,255,255,0.90);
+      border-left:1px solid rgba(255,255,255,0.68);
+      border-right:1px solid rgba(170,210,245,0.22);
+      border-bottom:1px solid rgba(158,200,238,0.18);
+      box-shadow:0 1px 0 rgba(255,255,255,0.80) inset;
+      position:relative;overflow:hidden;}
+    .member-card::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+      background:rgba(255,255,255,0.90);pointer-events:none;}
+    .member-card>*{position:relative;z-index:2;}
+    .member-card img{width:90px;height:90px;border-radius:50%;object-fit:cover;
+      display:block;margin:0 auto 14px;
+      border:1px solid rgba(255,255,255,0.72);
+      box-shadow:0 3px 14px rgba(80,130,210,0.12);}
+    .member-card h3{font-size:15px;font-weight:500;color:#1c2b4a;margin:0 0 4px;}
+    .member-card .role{font-size:13px;color:#6b7c9a;margin:0;}
+    .member-card .field{font-size:12px;color:#9ab0cc;margin:3px 0 0;}
+    .pub-year{font-family:'Lora',serif;font-size:19px;font-weight:500;
+      color:#111e3a;margin:28px 0 10px;}
+    .pub-year:first-of-type{margin-top:0;}
+    .pub-list{list-style:none;padding:0;margin:0;}
+    .pub-list li{font-size:15px;color:#374f72;line-height:1.65;
+      padding:10px 0 10px 16px;border-bottom:1px solid rgba(170,210,245,0.18);position:relative;}
+    .pub-list li:last-child{border-bottom:none;}
+    .pub-list li::before{content:'';position:absolute;left:0;top:19px;
+      width:4px;height:4px;border-radius:50%;background:rgba(120,170,230,0.5);}
+    .pub-list li em{font-style:italic;}
+    .pub-list a{font-size:13px;color:#2b5ec7;margin-left:6px;}
+    .location-wrap{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+    .map-box{flex:1 1 600px;min-width:300px;}
+    .map-box iframe{width:100%;height:320px;border:0;display:block;border-radius:14px;
+      outline:1px solid rgba(170,210,245,0.28);}
+    .addr-box{flex:0 1 260px;min-width:200px;}
+    .addr-box h3{margin:0 0 8px;}
+    .addr-box p{font-size:14px;color:#374f72;margin:0 0 12px;}
+</style>
 </head>
-
 <body>
-
-  <nav>
-    <div class="container">
-      <a href="index.html">Home</a>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Darlington Lab</a>
+    <div class="nav-links"><a href="index.html">Home</a>
       <a href="members.html">Members</a>
       <a class="active" href="publications.html">Publications</a>
       <a href="contact.html">Contact</a>
-      <a href="news.html">News</a>
-    </div>
-  </nav>
+      <a href="news.html">News</a></div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="card g">
+    <div class="g-edge"></div>
+    
+<h1>Publications</h1>
 
-  <main>
-    <div class="container">
+<p class="pub-year">2023</p>
+<ul class="pub-list">
+  <li>Little SR, Leung Z, Quach ABV, Hirukawa A, Gholizadeh F, Hajiaghayi M, Darlington PJ, Shih SCC. <em>A Tri-Droplet Liquid Structure for Highly Efficient Intracellular Delivery in Primary Mammalian Cells Using Digital Microfluidics.</em> Advanced Materials Technologies (2023). <a href="https://doi.org/10.1002/admt.202300719" target="_blank" rel="noopener">DOI</a></li>
+  <li>Carvajal Gonczi CM*, Hajiaghayi M*, Gholizadeh F, Soares MAX, Touma F, Lopez Naranjo C, Rios AJ, Pozzebon C, Daigneault T, Burchell-Reyes K, Darlington PJ. <em>The β2-adrenergic receptor agonist terbutaline upregulates T helper-17 cells in a protein kinase A-dependent manner.</em> Human Immunology (2023).</li>
+</ul>
 
-      <div class="card">
-        <h1>Publications</h1>
+<p class="pub-year">2022</p>
+<ul class="pub-list">
+  <li>Willis E et al. <em>Syncope during a Cold Pressor Test is Related to Pain Catastrophizing, Elevated Pain and Stress.</em> Concordia Journal of Psychology and Neuroscience (2022).</li>
+  <li>Godoy P, Darlington PJ, Whiteway M. <em>Genetic screening of Candida albicans inactivation mutants identifies new genes involved in macrophage-fungal cell interactions.</em> Frontiers in Microbiology (2022). <a href="https://doi.org/10.3389/fmicb.2022.833655" target="_blank" rel="noopener">DOI</a></li>
+</ul>
 
-        <h2>2023</h2>
-        <ul>
-          <li>
-            Little SR, Leung Z, Quach ABV, Hirukawa A, Gholizadeh F, Hajiaghayi M, Darlington PJ, Shih SCC.
-            <em>A Tri-Droplet Liquid Structure for Highly Efficient Intracellular Delivery in Primary Mammalian Cells
-              Using Digital Microfluidics.</em>
-            Advanced Materials Technologies (2023).
-            <a href="https://doi.org/10.1002/admt.202300719" target="_blank" rel="noopener">DOI</a>
-          </li>
-          <li>
-            Carvajal Gonczi CM*, Hajiaghayi M*, Gholizadeh F, Soares MAX, Touma F, Lopez Naranjo C, Rios AJ,
-            Pozzebon C, Daigneault T, Burchell-Reyes K, Darlington PJ.
-            <em>The β2-adrenergic receptor agonist terbutaline upregulates T helper-17 cells in a protein kinase
-              A-dependent manner.</em>
-            Human Immunology (2023).
-          </li>
-        </ul>
+<p class="pub-year">2021</p>
+<ul class="pub-list">
+  <li>Carvajal Gonczi CM et al. <em>Modulation of IL-17A and IFNγ by β2-adrenergic agonist terbutaline.</em> AIMS Allergy and Immunology (2021).</li>
+  <li>Kakon G* et al. <em>Elevated Heart Rate and Pain During a Cold Pressor Test Correlates to Pain Catastrophizing.</em> Applied Psychophysiology and Biofeedback (2021).</li>
+  <li>Lentini M et al. <em>Association Between Pain Catastrophizing and Cardiovascular Changes During a Cold Pressor Test.</em> Journal of Athletic Training (2021).</li>
+</ul>
 
-        <h2>2022</h2>
-        <ul>
-          <li>
-            Willis E et al.
-            <em>Syncope during a Cold Pressor Test is Related to Pain Catastrophizing, Elevated Pain and Stress.</em>
-            Concordia Journal of Psychology and Neuroscience (2022).
-          </li>
-          <li>
-            Godoy P, Darlington PJ, Whiteway M.
-            <em>Genetic screening of Candida albicans inactivation mutants identifies new genes involved in
-              macrophage-fungal cell interactions.</em>
-            Frontiers in Microbiology (2022).
-            <a href="https://doi.org/10.3389/fmicb.2022.833655" target="_blank" rel="noopener">DOI</a>
-          </li>
-        </ul>
+<p class="pub-year">2019</p>
+<ul class="pub-list">
+  <li>Nghibzadeh A et al. <em>Aquatic exercise with Swedish massage increases neurotrophic factors.</em> Biology of Exercise (2019).</li>
+  <li>Stopnicki B et al. <em>Helper CD4 T cells expressing Granzyme B cause astrocyte changes.</em> Glia (2019).</li>
+</ul>
 
-        <h2>2021</h2>
-        <ul>
-          <li>
-            Carvajal Gonczi CM et al.
-            <em>Modulation of IL-17A and IFNγ by β2-adrenergic agonist terbutaline.</em>
-            AIMS Allergy and Immunology (2021).
-          </li>
-          <li>
-            Kakon G* et al.
-            <em>Elevated Heart Rate and Pain During a Cold Pressor Test Correlates to Pain Catastrophizing.</em>
-            Applied Psychophysiology and Biofeedback (2021).
-          </li>
-          <li>
-            Lentini M et al.
-            <em>Association Between Pain Catastrophizing and Cardiovascular Changes During a Cold Pressor Test.</em>
-            Journal of Athletic Training (2021).
-          </li>
-        </ul>
+<p class="pub-year">2018</p>
+<ul class="pub-list">
+  <li>Darlington PJ et al. <em>Natural Killer Cells Regulate Th17 cells After Autologous Hematopoietic Stem Cell Transplantation for Relapsing Remitting Multiple Sclerosis.</em> Frontiers in Immunology (2018).</li>
+  <li>Youssef M et al. <em>Low Baseline Sympathetic Tone Correlates to a Greater Blood Pressure Change in the Cold Pressor Test.</em> Aerospace Medicine and Human Performance (2018).</li>
+</ul>
 
-        <h2>2019</h2>
-        <ul>
-          <li>
-            Nghibzadeh A et al.
-            <em>Aquatic exercise with Swedish massage increases neurotrophic factors.</em>
-            Biology of Exercise (2019).
-          </li>
-          <li>
-            Stopnicki B et al.
-            <em>Helper CD4 T cells expressing Granzyme B cause astrocyte changes.</em>
-            Glia (2019).
-          </li>
-        </ul>
+<p class="pub-year">2017</p>
+<ul class="pub-list">
+  <li>Carvajal Gonczi CCM et al. <em>Reciprocal Modulation of Helper Th1 and Th17 Cells by the β2-Adrenergic Receptor Agonist Drug Terbutaline.</em> FEBS Journal (2017).</li>
+  <li>Levtova N* et al. <em>Comparative morphology and phagocytic capacity of primary human adult microglia with time-lapse imaging.</em> Journal of Neuroimmunology (2017).</li>
+  <li>Elsaser SLC et al. <em>Lactate Promotes Survival Of Peripheral Blood Mononuclear Cells due to Lowering of Apoptosis.</em> Journal of Undergraduate Research and Scholarly Excellence (2017).</li>
+</ul>
 
-        <h2>2018</h2>
-        <ul>
-          <li>
-            Darlington PJ et al.
-            <em>Natural Killer Cells Regulate Th17 cells After Autologous Hematopoietic Stem Cell Transplantation for
-              Relapsing Remitting Multiple Sclerosis.</em>
-            Frontiers in Immunology (2018).
-          </li>
-          <li>
-            Youssef M et al.
-            <em>Low Baseline Sympathetic Tone Correlates to a Greater Blood Pressure Change in the Cold Pressor
-              Test.</em>
-            Aerospace Medicine and Human Performance (2018).
-          </li>
-        </ul>
-
-        <h2>2017</h2>
-        <ul>
-          <li>
-            Carvajal Gonczi CCM et al.
-            <em>Reciprocal Modulation of Helper Th1 and Th17 Cells by the β2-Adrenergic Receptor Agonist Drug
-              Terbutaline.</em>
-            FEBS Journal (2017).
-          </li>
-          <li>
-            Levtova N* et al.
-            <em>Comparative morphology and phagocytic capacity of primary human adult microglia with time-lapse
-              imaging.</em>
-            Journal of Neuroimmunology (2017).
-          </li>
-          <li>
-            Elsaser SLC et al.
-            <em>Lactate Promotes Survival Of Peripheral Blood Mononuclear Cells due to Lowering of Apoptosis.</em>
-            Journal of Undergraduate Research and Scholarly Excellence (2017).
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </main>
+  </div>
+</div>
 </body>
-
 </html>
